@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+  http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet author="dudnikvy" id="20250319-create-users-tables-1">
+        <sql>
+            CREATE TABLE IF NOT EXISTS users
+            (
+                id               UUID          NOT NULL CONSTRAINT users_tables_pk                  PRIMARY KEY,
+                name     varchar(500)     NOT NULL,
+                date_of_birth  date  not  null,
+                password  varchar(500) not null
+            );
+
+            COMMENT ON TABLE users IS 'Таблица пользователей';
+            COMMENT ON COLUMN users.id               IS 'Идентификатор';
+            COMMENT ON COLUMN users.name IS 'Наименование';
+            COMMENT ON COLUMN users.date_of_birth IS 'Дата рождения';
+            COMMENT ON COLUMN users.password IS 'Пароль';
+            CREATE UNIQUE INDEX IF NOT EXISTS users_uindex ON users (name);
+
+        </sql>
+        <rollback>
+            DROP TABLE IF EXISTS users;
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

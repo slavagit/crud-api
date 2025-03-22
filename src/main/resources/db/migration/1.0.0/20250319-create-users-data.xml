@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+  http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+  <changeSet author="dudnikvy" id="20250319-create-users-data-1">
+    <sql>
+      INSERT INTO users (id, name, date_of_birth, password)
+      VALUES ('610e2138-30e7-40ec-b7ef-4812498f5f04',
+              'USER1',
+              '2000-01-01',
+              'USER1') ON CONFLICT (id) DO NOTHING;
+      INSERT INTO users (id, name, date_of_birth, password)
+      VALUES ('2f2e8f85-16d7-48de-ba8e-386e9ea1835b',
+              'USER2',
+              '2000-01-01',
+              'USER2') ON CONFLICT (id) DO NOTHING;
+
+    </sql>
+    <sql>
+      INSERT INTO accounts (id, user_id, balance)
+      VALUES ('ae35ba97-fccf-4c3e-8082-472325984892',
+              '610e2138-30e7-40ec-b7ef-4812498f5f04',
+              '1000') ON CONFLICT (id) DO NOTHING;
+      INSERT INTO accounts (id, user_id, balance)
+      VALUES ('a6f2d424-ba79-4e76-b652-ae7a49149e03',
+              '2f2e8f85-16d7-48de-ba8e-386e9ea1835b',
+              '2000') ON CONFLICT (id) DO NOTHING;
+
+    </sql>
+    <sql>
+      INSERT INTO contr_accounts (id, user_id, balance)
+      VALUES ('1ab3a9da-bea4-4206-8b8c-8c12f6e8a774',
+              '610e2138-30e7-40ec-b7ef-4812498f5f04',
+              '0') ON CONFLICT (id) DO NOTHING;
+      INSERT INTO contr_accounts (id, user_id, balance)
+      VALUES ('d02b5e81-1d65-48cc-9355-91f0ac14fd1a',
+              '2f2e8f85-16d7-48de-ba8e-386e9ea1835b',
+              '0') ON CONFLICT (id) DO NOTHING;
+
+    </sql>
+    <sql>
+      INSERT INTO email_data (id, user_id, email)
+      VALUES ('71cea4a8-7245-4ae7-ad1f-8f1c8fd04736',
+              '610e2138-30e7-40ec-b7ef-4812498f5f04',
+              'user1@yandex.ru') ON CONFLICT (id) DO NOTHING;
+      INSERT INTO email_data (id, user_id, email)
+      VALUES ('294c82ce-8cc4-424b-97c0-b91a8bfe3db8',
+              '2f2e8f85-16d7-48de-ba8e-386e9ea1835b',
+              'user2@yandex.ru') ON CONFLICT (id) DO NOTHING;
+
+    </sql>
+    <sql>
+      INSERT INTO phone_data (id, user_id, phone)
+      VALUES ('71cea4a8-7245-4ae7-ad1f-8f1c8fd04736',
+              '610e2138-30e7-40ec-b7ef-4812498f5f04',
+              '7898177757777') ON CONFLICT (id) DO NOTHING;
+      INSERT INTO phone_data (id, user_id, phone)
+      VALUES ('294c82ce-8cc4-424b-97c0-b91a8bfe3db8',
+              '2f2e8f85-16d7-48de-ba8e-386e9ea1835b',
+              '7898177750000') ON CONFLICT (id) DO NOTHING;
+
+    </sql>
+    <rollback>
+      delete * from phone_data;
+      delete * from email_data;
+      delete * from accounts;
+      delete * from users;
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,45 @@
+spring:
+  cache:
+    type: none
+  main:
+    allow-bean-definition-overriding: true
+  application:
+    name: Test Crud Api
+  mvc:
+    format:
+      date-time: "yyyy-MM-dd HH:mm:ss"
+  jackson:
+    date-format: "yyyy-MM-dd HH:mm:ss"
+    time-zone: UTC
+    serialization:
+      write_date_timestamps_as_nanoseconds: false
+      write_dates_as_timestamps: false
+      fail_on_empty_beans: false
+    deserialization:
+      fail_on_unknown_properties: false
+    default-property-inclusion: non_null
+  jpa:
+    open-in-view: false
+    properties:
+      jakarta:
+        persistence:
+          validation:
+            mode: none
+      hibernate:
+        enable_lazy_load_no_trans: true
+        boot:
+          allow_jdbc_metadata_access: false
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: false
+  datasource:
+    driverClassName: org.postgresql.Driver
+    hikari:
+      leak-detection-threshold: 2000
+      maximum-pool-size: 50
+      minimum-idle: 1
+  liquibase:
+    change-log: classpath:db/migration/changelog.xml
+  enable:
+    scheduling: false
+  mustache:
+    check-template-location: false

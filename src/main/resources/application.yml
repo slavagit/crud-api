@@ -1,0 +1,73 @@
+server:
+  tomcat:
+   connection-timeout: -1
+  servlet:
+    context-path: /crudApi
+  port: 8081
+
+spring:
+  servlet:
+    multipart:
+      max-file-size: -1
+      max-request-size: -1
+  main:
+    allow-bean-definition-overriding: true
+  application:
+    name: Test Crud Api
+  mvc:
+    format:
+      date-time: "yyyy-MM-dd HH:mm:ss"
+  jackson:
+    mapper:
+      ACCEPT_CASE_INSENSITIVE_PROPERTIES: true
+      ACCEPT_CASE_INSENSITIVE_ENUMS: true
+    date-format: "yyyy-MM-dd HH:mm:ss"
+    time-zone: UTC
+    serialization:
+      write_date_timestamps_as_nanoseconds: false
+      WRITE_DATES_AS_TIMESTAMPS: false
+      fail_on_empty_beans: false
+    deserialization:
+      fail_on_unknown_properties: false
+    default-property-inclusion: non_null
+  jpa:
+    open-in-view: false
+    properties:
+      jakarta:
+        persistence:
+          validation:
+            mode: none
+      hibernate:
+        default_schema: testapi
+        generate_statistics: false
+        order_inserts: true
+        order_updates: true
+        jdbc:
+           batch_size: 100
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+      '[hypersistence.utils.enable_types_contributor]': false
+    show-sql: true
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=testapi
+    username: postgres
+    password: postgres
+    driverClassName: org.postgresql.Driver
+    hikari:
+      leak-detection-threshold: 60000
+      maximum-pool-size: 50
+      minimum-idle: 1
+      schema: ${spring.jpa.properties.hibernate.default_schema}
+  liquibase:
+    change-log: classpath:db/migration/changelog.xml
+    default-schema: ${spring.jpa.properties.hibernate.default_schema}
+  mustache:
+    check-template-location: false
+
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    doc-expansion: none
+    path: /swagger-ui.html
+
+

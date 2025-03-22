@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+  http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet author="dudnikvy" id="20250319-create-accounts-tables-1">
+        <sql>
+            CREATE TABLE IF NOT EXISTS accounts
+            (
+                id               UUID          NOT NULL CONSTRAINT accounts_tables_pk                  PRIMARY KEY,
+                user_id     UUID     NOT NULL,
+                balance     NUMERIC   default 0 NOT NULL
+            );
+
+            COMMENT ON TABLE accounts IS 'Таблица счетов';
+            COMMENT ON COLUMN accounts.id               IS 'Идентификатор';
+            COMMENT ON COLUMN accounts.user_id IS 'Идентификатор пользователя';
+            COMMENT ON COLUMN accounts.balance IS 'Щстаток на счете';
+
+            ALTER TABLE IF EXISTS accounts
+              ADD CONSTRAINT accounts_user_id_fk
+              FOREIGN KEY (user_id) REFERENCES users;
+
+            CREATE UNIQUE INDEX IF NOT EXISTS accounts_user_id_uindex
+                ON accounts (user_id);
+
+        </sql>
+        <rollback>
+            DROP TABLE IF EXISTS accounts;
+        </rollback>
+    </changeSet>
+</databaseChangeLog>
