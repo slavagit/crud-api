@@ -20,6 +20,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -36,16 +38,26 @@ public class UserEnt implements Serializable, UserDetails {
   @Id
   private UUID id;
   private String name;
+
   private String password;
+
   private LocalDate dateOfBirth;
+
+  @Fetch(FetchMode.JOIN)
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "id",referencedColumnName = "user_id", insertable = false, updatable = false)
   private AccountEnt account;
+
+  @Fetch(FetchMode.JOIN)
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "id",referencedColumnName = "user_id", insertable = false, updatable = false)
   private ContrAccountEnt contraAccount;
+
+  @Fetch(FetchMode.JOIN)
   @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
   private List<EmailEnt> emails;
+
+  @Fetch(FetchMode.JOIN)
   @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
   private List<PhoneEnt> phones;
 
