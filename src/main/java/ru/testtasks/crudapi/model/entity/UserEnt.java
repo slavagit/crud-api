@@ -42,10 +42,10 @@ public class UserEnt implements Serializable, UserDetails {
 
   private LocalDate dateOfBirth;
 
-  @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+  @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
   private AccountEnt account;
 
-  @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+  @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
   private ContrAccountEnt contraAccount;
 
   @Fetch(FetchMode.JOIN)
