@@ -4,15 +4,14 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -43,23 +42,19 @@ public class UserEnt implements Serializable, UserDetails {
 
   private LocalDate dateOfBirth;
 
-  @Fetch(FetchMode.JOIN)
-  @ManyToOne(fetch = FetchType.EAGER)
-  @JoinColumn(name = "id",referencedColumnName = "user_id", insertable = false, updatable = false)
+  @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
   private AccountEnt account;
 
-  @Fetch(FetchMode.JOIN)
-  @ManyToOne(fetch = FetchType.EAGER)
-  @JoinColumn(name = "id",referencedColumnName = "user_id", insertable = false, updatable = false)
+  @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
   private ContrAccountEnt contraAccount;
 
   @Fetch(FetchMode.JOIN)
   @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-  private List<EmailEnt> emails;
+  private Set<EmailEnt> emails;
 
   @Fetch(FetchMode.JOIN)
   @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-  private List<PhoneEnt> phones;
+  private Set<PhoneEnt> phones;
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {

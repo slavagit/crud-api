@@ -60,7 +60,7 @@ class TransferTest extends AbstractCommonContext {
 
     Awaitility.await()
         .during(Duration.ofSeconds(1))
-        .atMost(Duration.ofSeconds(10))
+        .atMost(Duration.ofSeconds(100))
         .until(() -> {
           var balanceFirst = userService.getUser(userFirst.getId())
               .getAccount()

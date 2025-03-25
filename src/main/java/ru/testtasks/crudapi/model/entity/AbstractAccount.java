@@ -1,13 +1,5 @@
 package ru.testtasks.crudapi.model.entity;
 
-import java.io.Serializable;
-import java.math.BigDecimal;
-import java.util.UUID;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.MappedSuperclass;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -15,6 +7,15 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
+
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.OneToOne;
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.UUID;
 
 @SuperBuilder(toBuilder = true)
 @MappedSuperclass
@@ -28,8 +29,10 @@ public class AbstractAccount implements Serializable {
 
   @Id
   private UUID id;
+
   private BigDecimal balance;
-  @ManyToOne(fetch = FetchType.EAGER)
+
+  @OneToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "user_id")
   private UserEnt user;
 

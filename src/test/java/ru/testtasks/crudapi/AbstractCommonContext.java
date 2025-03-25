@@ -34,9 +34,7 @@ public abstract class AbstractCommonContext {
       implements ApplicationContextInitializer<ConfigurableApplicationContext> {
 
     public void initialize(ConfigurableApplicationContext configurableApplicationContext) {
-      TestPropertyValues.of(
-//          "fgis.http.host=http://localhost:" + FGISMockServer.PORT + ""
-      ).applyTo(configurableApplicationContext.getEnvironment());
+      TestPropertyValues.of().applyTo(configurableApplicationContext.getEnvironment());
     }
   }
 }
